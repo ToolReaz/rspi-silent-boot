@@ -1,5 +1,8 @@
 # Silent boot on Rasbian Lite
 
+## How it works ?
+![diagram](https://raw.githubusercontent.com/ToolReaz/rspi-silent-boot/master/diagram.png)
+
 ## Raspi-config
 Execute the ``sudo raspi-config`` command to enter in the menu and edit the following values
 - Network options > Change the hostname
