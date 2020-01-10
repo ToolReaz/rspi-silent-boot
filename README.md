@@ -3,12 +3,15 @@
 ## How it works ?
 ![diagram](https://raw.githubusercontent.com/ToolReaz/rspi-silent-boot/master/diagram.png)
 
-## Raspi-config
-Execute the ``sudo raspi-config`` command to enter in the menu and edit the following values
-- Network options > Change the hostname
+## Reproduce it
+### Raspi-config
+First you need to enable autologin.
+Execute ``sudo raspi-config`` to enter in the menu and select the following values
 - Boot Options > Desktop / CLI > Console Autologin
+Then exit the menu and reboot.
 
-## Installing required packages
+### Installing required packages
+Update your system and install Xorg, OpenBox, Chromium, feh and Plymouth.
 ```bash
 sudo apt-get update
 sudo apt-get upgrade
@@ -18,7 +21,7 @@ sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xini
 sudo apt-get install feh plymouth plymouth-themes
 ```
 
-## Configuring OpenBox
+### Configuring OpenBox
 Edit the file ``/etc/xdg/openbox/autostart`` and replace the following content inside
 (it assumes you have wallpaper.png located in /home/pi)
 ```
@@ -39,13 +42,13 @@ sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/
 chromium-browser --disable-infobars --kiosk 'https://google.com'
 ```
 
-## Enabling splash screen
+### Enabling splash screen
 Edit ``/boot/cmdline.txt`` as root and add the following lines at the end of the line
 ```
 logo.nologo vt.global_cursor_default=0 quiet splash plymouth.ignore-serial-consoles
 ```
 
-Edit ``/boot/config.txt`` as root and ensure these lines are correctly set
+Edit ``/boot/config.txt`` as root and ensure these lines are correctly set (you may need to adapt depending on your type of display)
 ```
 [pi4]
 dtoverlay=i2c-rtc,pcf8563
@@ -74,7 +77,7 @@ Theme=your-theme
 ShowDelay=0
 ```
 
-## Start xserver automaticaly
+### Start xserver automaticaly
 Create a script that your user can execute:
 ```bash
 #!/bin/bash
@@ -86,23 +89,23 @@ Create the file ``~.bash_profile`` and write the following content inside
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && sh your-script.sh
 ```
 
-## Remove weak/default password warning
+### Remove weak/default password warning
 ```bash
 sudo rm /etc/profile.d/sshpwd.sh
 ```
 
-## Remove last login message
+### Remove last login message
 ```bash
 sudo chattr +i /var/log/wtmp /var/log/btmp
 ```
 
-## Remove the message of the day displayed before login
+### Remove the message of the day displayed before login
 ```bash
 sudo rm /etc/motd
 sudo rm /etc/update-motd.d/*
 ```
 
-## Remove login prompt
+### Remove login prompt
 Create the following file
 ```bash
 sudo systemctl edit getty@tty1
