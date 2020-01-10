@@ -96,7 +96,7 @@ sudo rm /etc/profile.d/sshpwd.sh
 
 ### Remove last login message
 ```bash
-sudo chattr +i /var/log/wtmp /var/log/btmp
+sudo chattr +i /var/log/lastlog
 ```
 
 ### Remove the message of the day displayed before login
