@@ -128,6 +128,9 @@ If you have a black screen between plymouth and openbox you can try to use fbi t
 Install fbi: ``sudo apt-get install fbi``
 Edit the file ``/etc/rc.local`` and add the following config befor the line ``exit 0``:
 ```bash
-fbi -noverbose /home/pi/you-image.png &
-wait $!
+sudo sh /home/pi/fbi.sh 2>&1 >/dev/null &
+```
+Then create the file ``fbi.sh`` with this content inside:
+```bash
+/usr/bin/fbi -d /dev/fb0 -T 1 -a --noverbose --nocomments /home/pi/your-image.png 2>&1 >/dev/null
 ```
