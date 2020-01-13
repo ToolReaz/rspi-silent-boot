@@ -120,3 +120,14 @@ then execute this command
 ```bash
 sudo systemctl reenable getty@tty1
 ```
+
+## Optionals
+### Image between boot and desktop
+If you have a black screen between plymouth and openbox you can try to use fbi to display an image. (This solution does not work every times)
+<br/>
+Install fbi: ``sudo apt-get install fbi``
+Edit the file ``/etc/rc.local`` and add the following config befor the line ``exit 0``:
+```bash
+fbi -noverbose /home/pi/you-image.png &
+wait $!
+```
